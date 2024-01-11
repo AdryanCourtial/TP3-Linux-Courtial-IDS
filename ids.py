@@ -4,13 +4,13 @@ import os
 # Argument 
 
 parser= argparse.ArgumentParser()
-parser.add_argument("build", required=False)
-parser.add_argument("checkout", required=False)
+parser.add_argument("build", default=0, const=1)
+parser.add_argument("checkout", default=0, const=1)
 arg = parser.parse_args()
 
-if arg[1] == "build":
-    print("build") 
+if arg.build == 1:
+    print("build")
 
-if arg[1] == "check":
+if arg.check == 1:
     print("check")
 
