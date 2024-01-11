@@ -4,8 +4,8 @@ import os
 # Argument 
 
 parser= argparse.ArgumentParser()
-parser.add_argument("build")
-parser.add_argument("checkout")
+parser.add_argument("build", default=None)
+parser.add_argument("checkout", default=None)
 arg = parser.parse_args()
 
 if arg[1] == "build":
