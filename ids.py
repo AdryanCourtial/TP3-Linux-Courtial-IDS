@@ -10,8 +10,6 @@ parser.add_argument( "-c", "--check", action="store_const", const=1, help="véri
 arg = parser.parse_args()
 
 
-if argv[1] == "":
-    raise ValueError
 
 if arg.build == 1:
     print("build")
