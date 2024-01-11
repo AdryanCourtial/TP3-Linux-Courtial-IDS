@@ -13,9 +13,9 @@ arg = parser.parse_args()
 if argv[1] == "":
     raise ValueError
 
-if argv[1] == "build":
+if arg.build == 1:
     print("build")
 
-if argv[1] == "check":
+if arg.check == 1:
     print("check")
 
