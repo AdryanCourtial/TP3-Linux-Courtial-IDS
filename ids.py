@@ -22,7 +22,7 @@ def CreateCloneJson():
         return 
     else:
         os.mkdir("/etc/ids")
-        os.open("/etc/ids/db.json")
+        os.open("/etc/ids/db.json", "x")
 
 #######################################################################################
         
