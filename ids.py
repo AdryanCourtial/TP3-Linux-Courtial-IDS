@@ -14,9 +14,9 @@ arg = parser.parse_args()
 #FONCTION ##############################################################################
 
 def CreateFileConf():
-    # if os.path.exists("/etc/ids.json"):
-    #     return
-    # else:
+    if os.path.exists("/etc/ids.json"):
+        return
+    else:
         open("/etc/ids.json", "x")
         #Write Json Conf
         ConfJson = json.dumps(BaseDataConf)
@@ -25,9 +25,9 @@ def CreateFileConf():
             print("Write Succes")
 
 def CreateCloneJson():
-    # if os.path.isdir("/etc/ids"):
-    #     return 
-    # else:
+    if os.path.isdir("/etc/ids"):
+        return 
+    else:
         os.mkdir("/etc/ids")
         open("/etc/ids/db.json", "x")
 
