@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from sys import argv
 import os
 import argparse
@@ -39,12 +40,11 @@ def CreateLogs():
         open("/var/log/ids.log", "x")
 
 def CreateBin():
-    if os.path.isdir("/var/local/bin"):
+    if os.path.exists("/var/local/bin/ids.py"):
         return
     else:
-        os.mkdir("/var/local/bin")
-        os.mkdir("/var/local/bin/ids")
-        #Bouger de place le fichier exe
+        pass
+        #Bouger de place le fichier exe ids.py dans var/local/bin/ids.py
 
 
 
@@ -69,9 +69,6 @@ def RecupJsonConf():
         print(DataConf)
         print(DataConf["port"])
 
-
-
-
 # Data #######################################################################################
 
 global DataConf
@@ -81,6 +78,31 @@ BaseDataConf = {
     "dir":[],
     "port":False 
 }
+
+DataDB = []
+
+DataDBmap = {
+    {"date": "eeee"},
+    {"port": "5888"},
+}
+
+DataDBInfo = {
+    "name":"",
+    "sha512":"",
+    "md5":"",
+    "last_change":"",
+    "date_creation":"",
+    "owner":"",
+    "group":"",
+    "size":""
+}
+
+DataDBmap["infos"] = DataDBInfo
+
+DataDB.append(DataDBmap)
+
+print(DataDBmap)
+
 
 ################################################################################################
 
@@ -104,8 +126,8 @@ if __name__ == '__main__':
         if IsInit() == False:
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
-            print("build")
             RecupJsonConf()
+            print("Build Succes")
 
 
     #Verif Quelle arguement est passé
@@ -114,9 +136,3 @@ if __name__ == '__main__':
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             print("check")
-
-
-
-
-
-
