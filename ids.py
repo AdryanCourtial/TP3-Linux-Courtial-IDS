@@ -8,14 +8,15 @@ import json
 parser= argparse.ArgumentParser()
 parser.add_argument( "-build", "--build", action="store_const", const=1, help="construit un fichier JSON qui contient un état des choses qu'on a demandé à surveiller")
 parser.add_argument( "-check", "--check", action="store_const", const=1, help="vérifie que l'état actuel est conforme à ce qui a été stocké dans | /var/ids/db.json | ")
+parser.add_argument( "-init", "--init", action="store_const", const=1, help="Commande à Lancer des la PREMIERE UTILISATION")
 arg = parser.parse_args()
 
 #FONCTION ##############################################################################
 
 def CreateFileConf():
-    if os.path.exists("/etc/ids.json"):
-        return
-    else:
+    # if os.path.exists("/etc/ids.json"):
+    #     return
+    # else:
         open("/etc/ids.json", "x")
         #Write Json Conf
         ConfJson = json.dumps(BaseDataConf)
@@ -23,17 +24,23 @@ def CreateFileConf():
             jsonfile.write(ConfJson)
             print("Write Succes")
 
-
-
 def CreateCloneJson():
-    if os.path.isdir("/etc/ids"):
-        return 
-    else:
+    # if os.path.isdir("/etc/ids"):
+    #     return 
+    # else:
         os.mkdir("/etc/ids")
         open("/etc/ids/db.json", "x")
 
+def IsInit() -> bool:
+    if os.path.exists("/etc/ids.json"):
+        return True
+    else:
+        return False
+
+
 # Data #######################################################################################
-        
+    
+
 BaseDataConf = {
     "file":[],
     "dir":[],
@@ -47,19 +54,29 @@ BaseDataConf = {
 
 if __name__ == '__main__':
 
-    CreateFileConf()
-    CreateCloneJson()
+
+    #Verif Quelle arguement est passé
+    if arg.init == 1:
+        if IsInit() == False:
+            CreateFileConf()
+            CreateCloneJson()
+        else:
+            print("Le Init a Déja etais Utilisé")
 
     #Verif Quelle arguement est passé
     if arg.build == 1:
-        print("build")
-
-
+        if IsInit() == False:
+            print("ERREUR: Utililse (-init) La premiere fois")
+        else:
+            print("build")
 
 
     #Verif Quelle arguement est passé
     if arg.check == 1:
-        print("check")
+        if IsInit() == False:
+            print("ERREUR: Utililse (-init) La premiere fois")
+        else:
+            print("check")
 
 
 
