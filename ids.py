@@ -2,6 +2,7 @@ from sys import argv
 import os
 import argparse
 import __future__
+import json
 
 # Argument 
 parser= argparse.ArgumentParser()
@@ -9,12 +10,19 @@ parser.add_argument( "-build", "--build", action="store_const", const=1, help="c
 parser.add_argument( "-check", "--check", action="store_const", const=1, help="vérifie que l'état actuel est conforme à ce qui a été stocké dans | /var/ids/db.json | ")
 arg = parser.parse_args()
 
-#FONCTION##############################################################################
+#FONCTION ##############################################################################
+
 def CreateFileConf():
     if os.path.exists("/etc/ids.json"):
         return
     else:
         open("/etc/ids.json", "x")
+        #Write Json Conf
+        ConfJson = json.dumps(BaseDataConf)
+        with open("/etc/ids.json", "w") as jsonfile:
+            jsonfile.write(ConfJson)
+            print("Write Succes")
+
 
 
 def CreateCloneJson():
@@ -22,10 +30,17 @@ def CreateCloneJson():
         return 
     else:
         os.mkdir("/etc/ids")
-        os.open("/etc/ids/db.json", "x")
+        open("/etc/ids/db.json", "x")
 
-#######################################################################################
+# Data #######################################################################################
         
+BaseDataConf = {
+    "file":[],
+    "dir":[],
+    "port":False 
+}
+
+################################################################################################
 
 
 
