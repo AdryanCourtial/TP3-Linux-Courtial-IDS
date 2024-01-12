@@ -16,9 +16,10 @@ def CreateFileConf():
     if os.path.exists("/etc/ids.json"):
         return
     else:
+        open("/etc/ids.json", "x")
         #Write Json Conf
         ConfJson = json.dumps(BaseDataConf)
-        with open("/etc/ids.json", "x" "w") as jsonfile:
+        with open("/etc/ids.json", "w") as jsonfile:
             jsonfile.write(ConfJson)
             print("Write Succes")
 
