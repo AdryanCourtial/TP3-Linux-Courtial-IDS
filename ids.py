@@ -61,11 +61,20 @@ def IsInit() -> bool:
         return True
     else:
         return False
+    
+def RecupJsonConf():
+    with open("/etc/ids.json", "r") as jsonfile:
+        DataConf = json.load(jsonfile)
+        print("Read Succes")
+        print(DataConf)
+        print(DataConf["port"])
+
 
 
 
 # Data #######################################################################################
-    
+
+global DataConf
 
 BaseDataConf = {
     "file":[],
@@ -96,6 +105,7 @@ if __name__ == '__main__':
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             print("build")
+            RecupJsonConf()
 
 
     #Verif Quelle arguement est passé
