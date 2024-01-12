@@ -3,6 +3,7 @@ import os
 import argparse
 import __future__
 import json
+import subprocess
 
 # Argument 
 parser= argparse.ArgumentParser()
@@ -25,17 +26,42 @@ def CreateFileConf():
             print("Write Succes")
 
 def CreateCloneJson():
-    if os.path.isdir("/etc/ids"):
+    if os.path.isdir("/var/ids"):
         return 
     else:
-        os.mkdir("/etc/ids")
-        open("/etc/ids/db.json", "x")
+        os.mkdir("/var/ids")
+        open("/var/ids/db.json", "x")
+
+def CreateLogs():
+    if os.path.exists("/var/log/ids.log"):
+        return
+    else:
+        open("/var/log/ids.log", "x")
+
+def CreateBin():
+    if os.path.isdir("/var/local/bin"):
+        return
+    else:
+        os.mkdir("/var/local/bin")
+        os.mkdir("/var/local/bin/ids")
+        #Bouger de place le fichier exe
+
+
+
+def CreateRight():
+    subprocess.run(['useradd', '-p', 'ids', 'ids'])
+    subprocess.run(['chmod', '-R', 'u+rw', '/etc/ids.json'])
+    subprocess.run(['chmod', '-R', 'u+rw', '/var/ids/db.json' ])
+    subprocess.run(['chmod', '-R', 'u+rw', '/var/log/ids.log' ])
+    subprocess.run(['chown', '-R', 'ids:ids', '/var/log/ids.log' , '/etc/ids.json', '/var/ids/db.json'])
+
 
 def IsInit() -> bool:
     if os.path.exists("/etc/ids.json"):
         return True
     else:
         return False
+
 
 
 # Data #######################################################################################
@@ -50,8 +76,6 @@ BaseDataConf = {
 ################################################################################################
 
 
-
-
 if __name__ == '__main__':
 
 
@@ -60,6 +84,9 @@ if __name__ == '__main__':
         if IsInit() == False:
             CreateFileConf()
             CreateCloneJson()
+            CreateLogs()
+            CreateBin()
+            CreateRight()
         else:
             print("Le Init a Déja etais Utilisé")
 
