@@ -116,10 +116,13 @@ DataDBInfo = {
     "size":""
 }
 
+DataEssaie = {
+    "esaie":"",
+}
+
 DataDBmap["infos"] = DataDB
 DataDB.append(DataDBmap)
-DataDB.append(DataDBmap)
-
+DataDB.append(DataEssaie)
 print(DataDBmap)
 
 
