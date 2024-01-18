@@ -89,17 +89,17 @@ def ifPort(DataConf)-> bool :
     
 def HashSha512(file):
     with open(file, "rb") as f:
-        digest = hashlib.sha256(f, "sha256")
+        digest = hashlib.sha256(f)
         return digest.hexdigest()  
 
 def HashSha256(file):
     with open(file, "rb") as f:
-        digest = hashlib.sha512(f, "sha512")
+        digest = hashlib.sha512(f)
         return digest.hexdigest()  
 
 def HashMD5(file):
     with open(file, "rb") as f:
-        digest = hashlib.md5(f, "md5")
+        digest = hashlib.md5(f)
         return digest.hexdigest()  
     
 def CreateDbFile(DataConf):
