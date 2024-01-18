@@ -175,11 +175,16 @@ if __name__ == '__main__':
         else:
             DataConf = RecupJsonConf() 
             DataDBmap["infos"] = DataDB
+            #Date Actuelle lors de la Creatrion Du fichier
             now = datetime.datetime.now()
             DataDBmap['date'] = now.strftime("%d/%m/%Y %H:%M:%S")
+            #Verif Si il y a des Fichier dans la Conf 
             if IfFile(DataConf) == True:
                 CreateDbFile(DataConf)
             
+
+
+            #Ajout a Mon Objet Final de Tout 
             DataDBmap["infos"] = DataDB
             print(DataDBmap)
             pass
