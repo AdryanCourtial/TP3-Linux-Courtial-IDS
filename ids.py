@@ -88,14 +88,14 @@ def ifPort(DataConf)-> bool :
         return True
     
 def HashSha512(file):
-    sha512_hash = hashlib.md5()
+    sha512_hash = hashlib.sha512()
     with open(file, "rb") as f:
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
             sha512_hash.update(chunk)
 
 def HashSha256(file):
-    sha256_hash = hashlib.md5()
+    sha256_hash = hashlib.sha256()
     with open(file, "rb") as f:
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
