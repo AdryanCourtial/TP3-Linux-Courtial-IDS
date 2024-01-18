@@ -144,7 +144,7 @@ BaseDataConf = {
 
 
 DataDBmap = {
-    "date": "eeee",
+    "date": datetime,
     "port": {},
 }
 
