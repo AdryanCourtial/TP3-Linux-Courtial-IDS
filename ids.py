@@ -5,6 +5,7 @@ import argparse
 import __future__
 import json
 import subprocess
+import hashlib
 
 # Argument 
 parser= argparse.ArgumentParser()
@@ -86,12 +87,37 @@ def ifPort(DataConf)-> bool :
     else:
         return True
     
+def HashSha512(file):
+    with open(file, "rb") as f:
+        digest = hashlib.file_digest(f, "sha256")
+        return digest.hexdigest()  
+
+def HashSha256(file):
+    with open(file, "rb") as f:
+        digest = hashlib.file_digest(f, "sha512")
+        return digest.hexdigest()  
+
+def HashMD5(file):
+    with open(file, "rb") as f:
+        digest = hashlib.file_digest(f, "md5")
+        return digest.hexdigest()  
+    
 def CreateDbFile(DataConf):
     for file in DataConf['file']:
-        file_information = os.stat(file)
+        file_info = os.stat(file)
+        DataDBInfo = {
+            'name':file,
+            "sha512":HashSha512(file),
+            "sha256":HashSha256(file),
+            "md5":HashMD5(file),
+            "last_change":os.path.getctime(file),
+            "date_creation":os.path.getmtime(file),
+            "owner":file_info.st_uid,
+            "group":file_info.st_gid,
+            "size":os.path.getsize(file)
+        }
         print("Essaie")
-        print(file_information)
-        DataDB.append(DataDBmap)
+        DataDB.append(DataDB)
 
 
 
@@ -116,6 +142,7 @@ DataDB = []
 DataDBInfo = {
     "name":"",
     "sha512":"",
+    "sha256":"",
     "md5":"",
     "last_change":"",
     "date_creation":"",
