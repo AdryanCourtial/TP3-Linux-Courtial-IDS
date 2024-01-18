@@ -66,8 +66,7 @@ def RecupJsonConf():
     with open("/etc/ids.json", "r") as jsonfile:
         DataConf = json.load(jsonfile)
         print("Read Succes")
-        print(DataConf)
-        print(DataConf["port"])
+        return DataConf
 
 # Data #######################################################################################
 
@@ -127,8 +126,9 @@ if __name__ == '__main__':
         if IsInit() == False:
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
-            RecupJsonConf()
-            print("Build Succes")
+            DataConf = RecupJsonConf() 
+            print(DataConf)
+
 
 
     #Verif Quelle arguement est passé
