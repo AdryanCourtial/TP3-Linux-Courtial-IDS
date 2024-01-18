@@ -85,6 +85,13 @@ def ifPort(DataConf)-> bool :
         return False
     else:
         return True
+    
+def CreateDbFile(DataConf):
+    for file in DataConf['file']:
+        file_information = os.stat(file)
+        print(file_information)
+        DataDB.append(DataDBmap)
+
 
 
 # Data #######################################################################################
@@ -116,15 +123,6 @@ DataDBInfo = {
     "size":""
 }
 
-DataEssaie = {
-    "esaie":"",
-}
-
-DataDBmap["infos"] = DataDB
-DataDB.append(DataDBmap)
-DataDB.append(DataEssaie)
-print(DataDBmap)
-
 
 ################################################################################################
 
@@ -149,8 +147,10 @@ if __name__ == '__main__':
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             DataConf = RecupJsonConf() 
+            DataDBmap["infos"] = DataDB
             if IfFile == True:
-                #Renplir La MapJson des info en fonction du file (Va faloir boucler)
+                CreateDbFile(DataConf)
+                print(DataDBmap)
                 pass
 
 
