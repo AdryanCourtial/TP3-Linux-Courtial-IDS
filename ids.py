@@ -79,12 +79,13 @@ BaseDataConf = {
     "port":False 
 }
 
-DataDB = []
 
 DataDBmap = {
     {"date": "eeee"},
     {"port": False},
 }
+
+DataDB = []
 
 DataDBInfo = {
     "name":"",
