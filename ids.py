@@ -125,7 +125,7 @@ def CreateDbFile(DataConf):
             "size":os.path.getsize(file)
         }
         print("Essaie")
-        DataDBInfo.append(DataDB)
+        DataDB.append(DataDBInfo)
 
 
 
