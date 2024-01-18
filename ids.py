@@ -6,6 +6,7 @@ import __future__
 import json
 import subprocess
 import hashlib
+import datetime
 
 # Argument 
 parser= argparse.ArgumentParser()
@@ -174,6 +175,7 @@ if __name__ == '__main__':
         else:
             DataConf = RecupJsonConf() 
             DataDBmap["infos"] = DataDB
+            DataDBmap['date'] = datetime.date('now')
             if IfFile(DataConf) == True:
                 CreateDbFile(DataConf)
             
