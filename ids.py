@@ -81,8 +81,8 @@ BaseDataConf = {
 
 
 DataDBmap = {
-    {"date": "eeee"},
-    {"port": False},
+    "date": "eeee",
+    "port": {},
 }
 
 DataDB = []
