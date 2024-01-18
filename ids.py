@@ -175,7 +175,8 @@ if __name__ == '__main__':
         else:
             DataConf = RecupJsonConf() 
             DataDBmap["infos"] = DataDB
-            DataDBmap['date'] = datetime.date.today()
+            now = datetime.datetime.now()
+            DataDBmap['date'] = now.strftime("%d/%m/%Y %H:%M:%S")
             if IfFile(DataConf) == True:
                 CreateDbFile(DataConf)
             
