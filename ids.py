@@ -93,7 +93,7 @@ def HashSha512(file):
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
             sha512_hash.update(chunk)
-    return HashSha512.hexdigest()
+    return sha512_hash.hexdigest()
 
 def HashSha256(file):
     sha256_hash = hashlib.sha256()
