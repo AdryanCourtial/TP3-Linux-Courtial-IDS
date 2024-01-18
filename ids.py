@@ -116,10 +116,9 @@ DataDBInfo = {
     "size":""
 }
 
-DataDBmap["infos"] = DataDBInfo
+DataDBmap["infos"] = DataDB
 DataDB.append(DataDBmap)
 DataDB.append(DataDBmap)
-print(DataDB)
 
 print(DataDBmap)
 
