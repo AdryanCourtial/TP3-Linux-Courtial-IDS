@@ -68,6 +68,25 @@ def RecupJsonConf():
         print("Read Succes")
         return DataConf
 
+def IfFile(DataConf)->bool:
+    if DataConf['file'] == []:
+        return False
+    else: 
+        return True
+
+def ifDir(DataConf)->bool:
+    if DataConf['dir'] == []:
+        return False
+    else:
+        return True
+
+def ifPort(DataConf)-> bool :
+    if DataConf['port'] == False:
+        return False
+    else:
+        return True
+
+
 # Data #######################################################################################
 
 global DataConf
@@ -100,6 +119,7 @@ DataDBInfo = {
 DataDBmap["infos"] = DataDBInfo
 
 DataDB.append(DataDBmap)
+DataDB.append(DataDBmap)
 
 print(DataDBmap)
 
@@ -127,7 +147,8 @@ if __name__ == '__main__':
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             DataConf = RecupJsonConf() 
-            print(DataConf)
+            if IfFile == True:
+                #Renplir La MapJson des info en fonction du file (Va faloir boucler)
 
 
 
