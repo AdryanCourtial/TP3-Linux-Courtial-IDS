@@ -149,7 +149,7 @@ if __name__ == '__main__':
         else:
             DataConf = RecupJsonConf() 
             DataDBmap["infos"] = DataDB
-            if IfFile() == True:
+            if IfFile(DataConf) == True:
                 CreateDbFile(DataConf)
             
             DataDBmap["infos"] = DataDB
