@@ -149,6 +149,7 @@ if __name__ == '__main__':
             DataConf = RecupJsonConf() 
             if IfFile == True:
                 #Renplir La MapJson des info en fonction du file (Va faloir boucler)
+                pass
 
 
 
