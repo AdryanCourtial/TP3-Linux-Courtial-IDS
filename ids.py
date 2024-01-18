@@ -88,19 +88,27 @@ def ifPort(DataConf)-> bool :
         return True
     
 def HashSha512(file):
+    sha512_hash = hashlib.md5()
     with open(file, "rb") as f:
-        digest = hashlib.sha256(f)
-        return digest.hexdigest()  
+        #Lie un Chunk
+        for chunk in iter(lambda: f.read(4096), b""):
+            sha512_hash.update(chunk)
 
 def HashSha256(file):
+    sha256_hash = hashlib.md5()
     with open(file, "rb") as f:
-        digest = hashlib.sha512(f)
-        return digest.hexdigest()  
+        #Lie un Chunk
+        for chunk in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(chunk)
 
 def HashMD5(file):
+    md5_hash = hashlib.md5()
     with open(file, "rb") as f:
-        digest = hashlib.md5(f)
-        return digest.hexdigest()  
+        #Lie un Chunk
+        for chunk in iter(lambda: f.read(4096), b""):
+            md5_hash.update(chunk)
+
+    return md5_hash.hexdigest() 
     
 def CreateDbFile(DataConf):
     for file in DataConf['file']:
