@@ -117,9 +117,9 @@ DataDBInfo = {
 }
 
 DataDBmap["infos"] = DataDBInfo
-
 DataDB.append(DataDBmap)
 DataDB.append(DataDBmap)
+print(DataDB)
 
 print(DataDBmap)
 
