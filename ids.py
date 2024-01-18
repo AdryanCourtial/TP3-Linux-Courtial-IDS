@@ -89,6 +89,7 @@ def ifPort(DataConf)-> bool :
 def CreateDbFile(DataConf):
     for file in DataConf['file']:
         file_information = os.stat(file)
+        print("Essaie")
         print(file_information)
         DataDB.append(DataDBmap)
 
@@ -150,8 +151,10 @@ if __name__ == '__main__':
             DataDBmap["infos"] = DataDB
             if IfFile == True:
                 CreateDbFile(DataConf)
-                print(DataDBmap)
-                pass
+            
+            DataDBmap["infos"] = DataDB
+            print(DataDBmap)
+            pass
 
 
 
