@@ -1,154 +1,246 @@
 #!/usr/bin/env python3
-from sys import argv
-import os
-import argparse
-import __future__
-import json
-import subprocess
-import hashlib
-import datetime
+""" Lib 
 
-# Argument 
-parser= argparse.ArgumentParser()
-parser.add_argument( "-build", "--build", action="store_const", const=1, help="construit un fichier JSON qui contient un état des choses qu'on a demandé à surveiller")
-parser.add_argument( "-check", "--check", action="store_const", const=1, help="vérifie que l'état actuel est conforme à ce qui a été stocké dans | /var/ids/db.json | ")
-parser.add_argument( "-init", "--init", action="store_const", const=1, help="Commande à Lancer des la PREMIERE UTILISATION")
+
+"""
+from os.path import getctime, getsize, getmtime, exists, isdir
+from os import mkdir, stat
+from argparse import ArgumentParser
+from json import load, dumps
+from subprocess import run
+from hashlib import md5,sha256,sha512
+from datetime import datetime
+
+
+# Argument
+parser= ArgumentParser()
+parser.add_argument( "-build", "--build",
+                    action="store_const", const=1,
+                    help="""construit un fichier JSON qui contient un état
+                    des chosesqu'on a demandé à surveiller""")
+parser.add_argument( "-check", "--check",
+                    action="store_const", const=1,
+                    help="""vérifie que l'état actuel est conforme à
+                    ce qui a été stocké dans | /var/ids/db.json | """)
+parser.add_argument( "-init", "--init",
+                    action="store_const", const=1,
+                    help="""Commande à Lancer des la PREMIERE UTILISATION""")
 arg = parser.parse_args()
 
-#FONCTION ##############################################################################
 
-def CreateFileConf():
-    if os.path.exists("/etc/ids.json"):
+def create_file_conf():
+    """ 
+    
+    Cree le fichier de conf
+    """
+    if exists("/etc/ids.json") is False:
+        with open("/etc/ids.json", "w", encoding="utf8") as conf_json_file:
+            conf_json = dumps(base_data_conf)
+            conf_json_file.write(conf_json)
+
+
+def create_clone_json():
+    """
+
+    Cree le Fichier Json
+    """
+
+
+    if isdir("/var/ids") is False:
+        mkdir("/var/ids")
+        with open("/var/ids/db.json", "x", encoding="utf-8") as _:
+            pass
+
+
+def create_logs():
+    """
+
+    Cree le Fichier Logs
+    """
+
+
+    if exists("/var/log/ids.log"):
         return
-    else:
-        open("/etc/ids.json", "x")
-        #Write Json Conf
-        ConfJson = json.dumps(BaseDataConf)
-        with open("/etc/ids.json", "w") as jsonfile:
-            jsonfile.write(ConfJson)
-            print("Write Succes")
-
-def CreateCloneJson():
-    if os.path.isdir("/var/ids"):
-        return 
-    else:
-        os.mkdir("/var/ids")
-        open("/var/ids/db.json", "x")
-
-def CreateLogs():
-    if os.path.exists("/var/log/ids.log"):
-        return
-    else:
-        open("/var/log/ids.log", "x")
-
-def CreateBin():
-    if os.path.exists("/var/local/bin/ids.py"):
-        return
-    else:
+    with open("/var/log/ids.log", "x", encoding="utf-8") as _:
         pass
-        #Bouger de place le fichier exe ids.py dans var/local/bin/ids.py
 
 
+def create_bin():
+    """
 
-def CreateRight():
-    subprocess.run(['useradd', '-p', 'ids', 'ids'])
-    subprocess.run(['chmod', '-R', 'u+rw', '/etc/ids.json'])
-    subprocess.run(['chmod', '-R', 'u+rw', '/var/ids/db.json' ])
-    subprocess.run(['chmod', '-R', 'u+rw', '/var/log/ids.log' ])
-    subprocess.run(['chown', '-R', 'ids:ids', '/var/log/ids.log' , '/etc/ids.json', '/var/ids/db.json'])
+    Create le bin
+    """
 
 
-def IsInit() -> bool:
-    if os.path.exists("/etc/ids.json"):
-        return True
-    else:
-        return False
+    if exists("/var/local/bin/ids.py"):
+        return
+    #Bouger de place le fichier exe ids.py dans var/local/bin/ids.py
+
+
+def create_right():
+    """
     
-def RecupJsonConf():
-    with open("/etc/ids.json", "r") as jsonfile:
-        DataConf = json.load(jsonfile)
+    Cree les Droits pour L'app
+    """
+
+
+    run(['useradd', '-p', 'ids', 'ids'], check=False)
+    run(['chmod', '-R', 'u+rw', '/etc/ids.json'], check=False)
+    run(['chmod', '-R', 'u+rw', '/var/ids/db.json'], check=False)
+    run(['chmod', '-R', 'u+rw', '/var/log/ids.log'],check=False)
+    run(['chown', '-R', 'ids:ids', '/var/log/ids.log' , '/etc/ids.json', '/var/ids/db.json'],
+         check=False)
+
+
+def is_init() -> bool:
+    """
+    
+    Verif si Lutilisateur as deja fais un init
+    """
+
+
+    if exists("/etc/ids.json"):
+        return True
+    return False
+
+
+def recup_json_conf():
+    """
+    
+    Recuperere la Conf Json Pour la Traiter
+    """
+    with open("/etc/ids.json", "r", encoding="utf-8") as jsonfile:
+        conf = load(jsonfile)
         print("Read Succes")
-        return DataConf
+        return conf
 
-def IfFile(DataConf)->bool:
-    if DataConf['file'] == []:
-        return False
-    else: 
-        return True
 
-def ifDir(DataConf)->bool:
-    if DataConf['dir'] == []:
-        return False
-    else:
-        return True
+def is_file(conf)->bool:
+    """
 
-def ifPort(DataConf)-> bool :
-    if DataConf['port'] == False:
+    Verifie Si la Fichier est un Fichier 
+    """
+
+
+    if conf['file'] == []:
         return False
-    else:
-        return True
+    return True
+
+
+def is_dir(conf)->bool:
+    """
     
-def HashSha512(file):
-    sha512_hash = hashlib.sha512()
+    Verifie is Le fichier est un Dossier
+    """
+
+
+    if conf['dir'] == []:
+        return False
+    return True
+
+
+def if_port(conf)-> bool :
+    """
+    
+    Verifie si Les ports doivent etre verifié 
+    """
+
+    if conf['port'] is False:
+        return False
+    return True
+
+
+def hash_sha512(file):
+    """
+    
+    Hash Le fichier en Sha512
+    """
+
+
+    sha512_hash = sha512()
     with open(file, "rb") as f:
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
             sha512_hash.update(chunk)
     return sha512_hash.hexdigest()
 
-def HashSha256(file):
-    sha256_hash = hashlib.sha256()
+
+def hash_sha256(file):
+    """
+    
+    Hash Le Fichier en Sha256
+    """
+
+
+    sha256_hash = sha256()
     with open(file, "rb") as f:
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
             sha256_hash.update(chunk)
     return sha256_hash.hexdigest()
 
-def HashMD5(file):
-    md5_hash = hashlib.md5()
+
+def hash_md5(file):
+    """
+    
+    Hash Le Fichier en MD5
+    """
+
+
+    md5_hash = md5()
     with open(file, "rb") as f:
         #Lie un Chunk
         for chunk in iter(lambda: f.read(4096), b""):
             md5_hash.update(chunk)
 
-    return md5_hash.hexdigest() 
+    return md5_hash.hexdigest()
+
+
+def create_db_file(conf):
+    """
     
-def CreateDbFile(DataConf):
-    for file in DataConf['file']:
-        file_info = os.stat(file)
-        DataDBInfo = {
+    Cree la Copie des des infos a verif
+    """
+
+
+    for file in conf['file']:
+        file_info = stat(file)
+        data_db_info = {
             'name':file,
-            "sha512":HashSha512(file),
-            "sha256":HashSha256(file),
-            "md5":HashMD5(file),
-            "last_change":os.path.getctime(file),
-            "date_creation":os.path.getmtime(file),
+            "sha512":hash_sha512(file),
+            "sha256":hash_sha256(file),
+            "md5":hash_md5(file),
+            "last_change":getctime(file),
+            "date_creation":getmtime(file),
             "owner":file_info.st_uid,
             "group":file_info.st_gid,
-            "size":os.path.getsize(file)
+            "size":getsize(file)
         }
         print("Essaie")
-        DataDB.append(DataDBInfo)
+        data_db.append(data_db_info)
 
+
+# def CreateDbDir(data_conf):
+#     for dir in data_conf['dir']:
+#         pass
 
 
 # Data #######################################################################################
 
-global DataConf
 
-BaseDataConf = {
+base_data_conf = {
     "file":[],
     "dir":[],
     "port":False 
 }
 
 
-DataDBmap = {
+data_db_map = {
     "date": "",
     "port": {},
 }
 
-DataDB = []
+data_db = []
 
 
 ################################################################################################
@@ -159,41 +251,40 @@ if __name__ == '__main__':
 
     #Verif Quelle arguement est passé
     if arg.init == 1:
-        if IsInit() == False:
-            CreateFileConf()
-            CreateCloneJson()
-            CreateLogs()
-            CreateBin()
-            CreateRight()
+        if is_init() is False:
+            create_file_conf()
+            create_clone_json()
+            create_logs()
+            create_bin()
+            create_right()
         else:
             print("Le Init a Déja etais Utilisé")
 
     #Verif Quelle arguement est passé
     if arg.build == 1:
-        if IsInit() == False:
+        if is_init() is False:
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
-            DataConf = RecupJsonConf() 
-            DataDBmap["infos"] = DataDB
+            data_conf = recup_json_conf()
+            data_db_map["infos"] = data_db
             #Date Actuelle lors de la Creatrion Du fichier
-            now = datetime.datetime.now()
-            DataDBmap['date'] = now.strftime("%d/%m/%Y %H:%M:%S")
-            #Verif Si il y a des Fichier dans la Conf 
-            if IfFile(DataConf) == True:
-                CreateDbFile(DataConf)
-            
+            now = datetime.now()
+            data_db_map['date'] = now.strftime("%d/%m/%Y %H:%M:%S")
+            #Verif Si il y a des Fichier dans la Conf
+            if is_file(data_conf) is True:
+                create_db_file(data_conf)
+                # CreateDbDir(data_conf)
 
 
-            #Ajout a Mon Objet Final de Tout 
-            DataDBmap["infos"] = DataDB
-            print(DataDBmap)
-            pass
 
+            #Ajout a Mon Objet Final de Tout
+            data_db_map["infos"] = data_db
+            print(data_db_map)
 
 
     #Verif Quelle arguement est passé
     if arg.check == 1:
-        if IsInit() == False:
+        if is_init() is False:
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             print("check")
