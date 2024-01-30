@@ -290,7 +290,7 @@ if __name__ == '__main__':
             if is_file(data_conf) is True:
                 create_db_file(data_conf)
                 # CreateDbDir(data_conf)
-            elif is_dir(data_conf) is True:
+            if is_dir(data_conf) is True:
                 create_db_dir(data_conf)
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
