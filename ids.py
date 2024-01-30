@@ -10,7 +10,7 @@ from json import load, dumps
 from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
-from dirhash import dirhash
+# from dirhash import dirhash
 
 
 now = datetime.now()
