@@ -12,6 +12,7 @@ from hashlib import md5,sha256,sha512
 from datetime import datetime
 
 
+now = datetime.now()
 # Argument
 parser= ArgumentParser()
 parser.add_argument( "-build", "--build",
@@ -199,7 +200,7 @@ def hash_md5(file):
 def create_db_file(conf):
     """
     
-    Cree la Copie des des infos a verif
+    Cree la Copie des File a verif
     """
 
 
@@ -220,10 +221,26 @@ def create_db_file(conf):
         data_db.append(data_db_info)
 
 
-# def CreateDbDir(data_conf):
-#     for dir in data_conf['dir']:
-#         pass
-
+def create_db_dir(data_conf):
+    """
+    
+    Cree la Copie des Dir a Verif
+    """
+    for dir in data_conf['dir']:
+        dir_info = stat(dir)
+        data_db_info = {
+            'name':dir,
+            "sha512":hash_sha512(dir),
+            "sha256":hash_sha256(dir),
+            "md5":hash_md5(dir),
+            "last_change":getctime(dir),
+            "date_creation":getmtime(dir),
+            "owner":dir_info.st_uid,
+            "group":dir_info.st_gid,
+            "size":getsize(dir)
+        }
+        print("Essaie")
+        data_db.append(data_db_info) #IL FAUT REGARDER SI LE DOSSIER ET REMPLIE ET AUUUSI VERIF LES SOUS FICHIERS (LE BORDEL EN GROS) (ON VA FAIRE QUE LE DOSSIER POUR LINSTANT)
 
 # Data #######################################################################################
 
@@ -268,15 +285,13 @@ if __name__ == '__main__':
             data_conf = recup_json_conf()
             data_db_map["infos"] = data_db
             #Date Actuelle lors de la Creatrion Du fichier
-            now = datetime.now()
             data_db_map['date'] = now.strftime("%d/%m/%Y %H:%M:%S")
             #Verif Si il y a des Fichier dans la Conf
             if is_file(data_conf) is True:
                 create_db_file(data_conf)
                 # CreateDbDir(data_conf)
-
-
-
+            elif is_dir(data_conf) is True:
+                create_db_dir(data_conf)
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             print(data_db_map)
