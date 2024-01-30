@@ -231,9 +231,9 @@ def create_db_dir(data_conf):
         dir_info = stat(dir)
         data_db_info = {
             'name':dir,
-            "sha512":dirhash(dir, sha512),
-            "sha256":dirhash(dir, sha256),
-            "md5":dirhash(dir, md5),
+            # "sha512":dirhash(dir, sha512),
+            # "sha256":dirhash(dir, sha256),
+            # "md5":dirhash(dir, md5),
             "last_change":getctime(dir),
             "date_creation":getmtime(dir),
             "owner":dir_info.st_uid,
