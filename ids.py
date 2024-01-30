@@ -10,6 +10,7 @@ from json import load, dumps
 from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
+from dirhash import dirhash
 
 
 now = datetime.now()
@@ -230,9 +231,9 @@ def create_db_dir(data_conf):
         dir_info = stat(dir)
         data_db_info = {
             'name':dir,
-            "sha512":hash_sha512(dir),
-            "sha256":hash_sha256(dir),
-            "md5":hash_md5(dir),
+            "sha512":dirhash(dir, sha512),
+            "sha256":dirhash(dir, sha256),
+            "md5":dirhash(dir, md5),
             "last_change":getctime(dir),
             "date_creation":getmtime(dir),
             "owner":dir_info.st_uid,
