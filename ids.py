@@ -278,7 +278,7 @@ base_data_conf = {
 data_db_map = {
     "date": "",
     "port": {},
-}printenv
+}
 
 data_db = []
 
