@@ -32,10 +32,10 @@ arg = parser.parse_args()
 
 
 def string_to_json(path, arg, to_jsonify):
-    if exists(path) is False:
-        with open(path, arg, encoding="utf8") as conf_json_file:
+    if exists(path) is True:
+        with open(path, arg, encoding="utf8") as json_file:
             conf_json = dumps(to_jsonify)
-            conf_json_file.write(conf_json)
+            json_file.write(conf_json)
 
 
 
@@ -45,9 +45,9 @@ def create_file_conf():
     Cree le fichier de conf
     """
     if exists("/etc/ids.json") is False:
-        with open("/etc/ids.json", "w", encoding="utf8") as conf_json_file:
+        with open("/etc/ids.json", "w", encoding="utf8") as json_file:
             conf_json = dumps(base_data_conf)
-            conf_json_file.write(conf_json)
+            json_file.write(conf_json)
 
 
 def create_clone_json():
@@ -55,12 +55,10 @@ def create_clone_json():
 
     Cree le Fichier Json
     """
-
-
     if isdir("/var/ids") is False:
         mkdir("/var/ids")
         with open("/var/ids/db.json", "x", encoding="utf-8") as _:
-            pass
+            ...
 
 
 def create_logs():
