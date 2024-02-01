@@ -10,7 +10,7 @@ from json import load, dumps
 from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
-from psutil import net_connections, CONN_LISTEN
+from psutil import net_connections, CONN_ESTABLISHED
 # from dirhash import dirhash
 
 
@@ -249,7 +249,7 @@ def create_db_port():
     connections = net_connections(kind='inet')
 
 # filter to get only ports equal to LISTEN
-    my_ports = [conn.laddr.port for conn in connections if conn.status == CONN_LISTEN]
+    my_ports = [conn.laddr.port for conn in connections if conn.status == CONN_ESTABLISHED]
 
 # Exclude duplicate ports
     my_ports = list(set(my_ports))
