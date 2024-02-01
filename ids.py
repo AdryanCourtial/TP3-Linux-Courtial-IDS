@@ -278,7 +278,7 @@ base_data_conf = {
 data_db_map = {
     "date": "",
     "port": {},
-}
+}printenv
 
 data_db = []
 
@@ -315,7 +315,7 @@ if __name__ == '__main__':
             if is_dir(data_conf) is True:
                 create_db_dir(data_conf)
             if if_port(data_conf) is True:
-                create_db_port("127.0.0.1", 1, 65535)
+                create_db_port()
 
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
