@@ -34,6 +34,7 @@ arg = parser.parse_args()
 def string_to_json(path, arg, to_jsonify):
     if exists(path) is True:
         with open(path, arg, encoding="utf8") as json_file:
+            json_file.truncate(0)
             conf_json = dumps(to_jsonify)
             json_file.write(conf_json)
 
@@ -339,8 +340,7 @@ if __name__ == '__main__':
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
-            string_to_json("/var/ids/db.json", "w", data_db_map)
-            print(data_db_map)
+            string_to_json("/var/ids/db.json", "wr+", data_db_map)
 
 
     #Verif Quelle arguement est passé
