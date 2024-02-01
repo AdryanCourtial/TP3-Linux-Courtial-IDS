@@ -11,9 +11,11 @@ from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
 from psutil import net_connections, CONN_LISTEN
-from logging import basicConfig, warning, debug, info, error, critical
+from logging import basicConfig, warning, debug, info, error, critical, DEBUG
 # from dirhash import dirhash
 
+basicConfig(filename='/var/log/ids.log',level=DEBUG,\
+      format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
 
 now = datetime.now()
 # Argument
@@ -50,6 +52,8 @@ def create_file_conf():
         with open("/etc/ids.json", "w", encoding="utf8") as json_file:
             conf_json = dumps(base_data_conf)
             json_file.write(conf_json)
+            info('Fichier de Conf Crée')
+    info('Me Fichier de Conf existe deja')
 
 
 def create_clone_json():
@@ -71,6 +75,7 @@ def create_logs():
 
 
     if exists("/var/log/ids.log"):
+        info("Fichier deja crée")
         return
     with open("/var/log/ids.log", "x", encoding="utf-8") as _:
         pass
@@ -227,7 +232,6 @@ def create_db_file(conf):
             "group":file_info.st_gid,
             "size":getsize(file)
         }
-        print("Essaie")
         data_db.append(data_db_info)
 
 
@@ -249,9 +253,8 @@ def create_db_dir(conf):
             "group":dir_info.st_gid,
             "size":getsize(dir)
         }
-        print("Essaie")
         data_db.append(data_db_info) #IL FAUT REGARDER SI LE DOSSIER ET REMPLIE ET AUUUSI VERIF LES SOUS FICHIERS (LE BORDEL EN GROS) (ON VA FAIRE QUE LE DOSSIER POUR LINSTANT)
-
+        info("")
 
 def create_db_port():
     connections = net_connections(kind='inet')
@@ -272,6 +275,10 @@ def create_db_port():
             "name": port
         }
         port_db.append(ports)
+        info("FIN De Du Scan des Ports")
+    
+
+    
 
 
 def write_json_db():
@@ -314,16 +321,22 @@ if __name__ == '__main__':
     if arg.init == 1:
         if is_init() is False:
             create_file_conf()
+            info("Fichier de Conf Crée")
             create_clone_json()
+            info("Fichier Clone Crée")
             create_logs()
+            info("Fichier Logs Crée")
             create_bin()
             create_right()
+            info("Droit Crée")
         else:
+            warning("Le Init a deja etais utilisé")
             print("Le Init a Déja etais Utilisé")
 
     #Verif Quelle arguement est passé
     if arg.build == 1:
         if is_init() is False:
+            warning("Utilse le Init Avant")
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             data_conf = recup_json_conf()
@@ -333,20 +346,25 @@ if __name__ == '__main__':
             #Verif Si il y a des Fichier dans la Conf
             if is_file(data_conf) is True:
                 create_db_file(data_conf)
+                info("Info File Copié !")
             if is_dir(data_conf) is True:
                 create_db_dir(data_conf)
+                info("Info Dir Copié !")
             if if_port(data_conf) is True:
                 create_db_port()
+                info("Info POrts Copié !")
 
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
             string_to_json("/var/ids/db.json", "w", data_db_map)
+            ("Clone des Information reussi")
 
 
     #Verif Quelle arguement est passé
     if arg.check == 1:
         if is_init() is False:
+            warning("Utilse le Init Avant")
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
             print("check")
