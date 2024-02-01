@@ -10,8 +10,7 @@ from json import load, dumps
 from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
-from scapy.all import *
-from scapy.layers.inet import IP, TCP
+from psutil import net_connections, CONN_LISTEN
 # from dirhash import dirhash
 
 
@@ -245,12 +244,24 @@ def create_db_dir(conf):
         print("Essaie")
         data_db.append(data_db_info) #IL FAUT REGARDER SI LE DOSSIER ET REMPLIE ET AUUUSI VERIF LES SOUS FICHIERS (LE BORDEL EN GROS) (ON VA FAIRE QUE LE DOSSIER POUR LINSTANT)
 
+
+def create_db_port():
+    connections = net_connections(kind='inet')
+
+# filter to get only ports equal to LISTEN
+    my_ports = [conn.laddr.port for conn in connections if conn.status == CONN_LISTEN]
+
+# Exclude duplicate ports
+    my_ports = list(set(my_ports))
+
+# Order from smallest to largest port
+    my_ports.sort()
+
+# Show the TCP ports that is waiting for connection (LISTENING)
+    for port in my_ports:
+        print(f"My Open TCP port= {port}  is LISTENING  for TCP connection")
+
     
-def create_db_port(target, start_port, end_port):
-    for port in range(start_port, end_port + 1):
-        response = sr1(IP(dst=target) / TCP(dport=port, flags="S"), timeout=1, verbose=0)
-        if response and response.haslayer(TCP) and response[TCP].flags == 18:
-            print(f"Port {port} ouvert")
     
 
 
