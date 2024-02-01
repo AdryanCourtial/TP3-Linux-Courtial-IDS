@@ -341,8 +341,8 @@ if __name__ == '__main__':
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
+            string_to_json("/var/ids/db.json", "w", data_db_map)
             print(data_db_map)
-            string_to_json("/var/ids/db.json", "x", data_db_map)
 
 
     #Verif Quelle arguement est passé
