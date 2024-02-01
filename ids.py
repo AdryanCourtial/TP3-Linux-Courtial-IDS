@@ -260,6 +260,10 @@ def create_db_port():
 # Show the TCP ports that is waiting for connection (LISTENING)
     for port in my_ports:
         print(f"My Open TCP port= {port}  is LISTENING  for TCP connection")
+        ports = {
+            "name": port
+        }
+        port_db.append(ports)
 
     
     
@@ -277,10 +281,11 @@ base_data_conf = {
 
 data_db_map = {
     "date": "",
-    "port": {},
 }
 
 data_db = []
+
+port_db = []
 
 
 ################################################################################################
@@ -319,6 +324,7 @@ if __name__ == '__main__':
 
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
+            data_db_map["port_listen"] = port_db
             print(data_db_map)
 
 
