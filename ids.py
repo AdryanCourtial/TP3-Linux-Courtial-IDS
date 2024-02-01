@@ -11,7 +11,7 @@ from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
 from psutil import net_connections, CONN_LISTEN
-from logging import basicConfig, warning, debug, info, error, critical, DEBUG
+from logging import basicConfig, warning, info, DEBUG
 # from dirhash import dirhash
 
 basicConfig(filename='/var/log/ids.log',level=DEBUG,\
