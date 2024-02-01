@@ -10,6 +10,8 @@ from json import load, dumps
 from subprocess import run
 from hashlib import md5,sha256,sha512
 from datetime import datetime
+from scapy.all import *
+from scapy.layers.inet import IP, TCP
 # from dirhash import dirhash
 
 
@@ -222,12 +224,12 @@ def create_db_file(conf):
         data_db.append(data_db_info)
 
 
-def create_db_dir(data_conf):
+def create_db_dir(conf):
     """
     
     Cree la Copie des Dir a Verif
     """
-    for dir in data_conf['dir']:
+    for dir in conf['dir']:
         dir_info = stat(dir)
         data_db_info = {
             'name':dir,
@@ -242,6 +244,15 @@ def create_db_dir(data_conf):
         }
         print("Essaie")
         data_db.append(data_db_info) #IL FAUT REGARDER SI LE DOSSIER ET REMPLIE ET AUUUSI VERIF LES SOUS FICHIERS (LE BORDEL EN GROS) (ON VA FAIRE QUE LE DOSSIER POUR LINSTANT)
+
+    
+def create_db_port(target, start_port, end_port):
+    for port in range(start_port, end_port + 1):
+        response = sr1(IP(dst=target) / TCP(dport=port, flags="S"), timeout=1, verbose=0)
+        if response and response.haslayer(TCP) and response[TCP].flags == 18:
+            print(f"Port {port} ouvert")
+    
+
 
 # Data #######################################################################################
 
@@ -290,9 +301,11 @@ if __name__ == '__main__':
             #Verif Si il y a des Fichier dans la Conf
             if is_file(data_conf) is True:
                 create_db_file(data_conf)
-                # CreateDbDir(data_conf)
             if is_dir(data_conf) is True:
                 create_db_dir(data_conf)
+            if if_port(data_conf) is True:
+                create_db_port("127.0.0.1", 1, 65535)
+
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             print(data_db_map)
