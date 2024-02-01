@@ -31,6 +31,14 @@ parser.add_argument( "-init", "--init",
 arg = parser.parse_args()
 
 
+def string_to_json(path, arg, to_jsonify):
+    if exists(path) is False:
+        with open(path, arg, encoding="utf8") as conf_json_file:
+            conf_json = dumps(to_jsonify)
+            conf_json_file.write(conf_json)
+
+
+
 def create_file_conf():
     """ 
     
@@ -265,6 +273,14 @@ def create_db_port():
         }
         port_db.append(ports)
 
+
+def write_json_db():
+    """
+    
+    On Va ecrire tous ce qu'il y as dans l'obj db dans le ficheir db.json 
+    """
+    ... 
+
     
     
 
@@ -326,6 +342,7 @@ if __name__ == '__main__':
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
             print(data_db_map)
+            string_to_json("/var/ids/db.json", "x", data_db_map)
 
 
     #Verif Quelle arguement est passé
