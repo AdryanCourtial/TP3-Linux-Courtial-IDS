@@ -301,7 +301,8 @@ def compare_data(db, conf):
         print(file)
         for dbi in db["infos"]:
             if (file == dbi["name"]):
-                print(dbi + "\n\n")
+                print(dbi)
+                print("\n\n")
                 break
     
     
