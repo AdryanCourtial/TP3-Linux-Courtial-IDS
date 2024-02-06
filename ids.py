@@ -303,6 +303,20 @@ def compare_data(db, conf):
             if (file == dbi["name"]):
                 print(dbi)
                 print("\n\n")
+                file_info = stat(file)
+                if (
+                    dbi["sha512"] == hash_sha512(file) and
+                    dbi["sha256"] == hash_sha256(file) and
+                    dbi["md5"] == hash_md5(file) and
+                    dbi["last_change"] == getctime(file) and
+                    dbi["date_creation"] == getmtime(file) and
+                    dbi["owner"] == file_info.st_uid and
+                    dbi["group"] == file_info.st_gid and
+                    dbi["size"] == getsize(file)
+                ):
+                    print("Rien N'as Etais Modifié")
+                else: 
+                    print("Modification")
                 break
     
     
