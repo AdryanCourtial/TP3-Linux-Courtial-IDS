@@ -14,8 +14,14 @@ from psutil import net_connections, CONN_LISTEN
 from logging import basicConfig, warning, info, DEBUG
 import __future__# from dirhash import dirhash
 
-basicConfig(filename=__future__.path_to_logs,level=DEBUG,\
+path_to_db = "/var/ids/db.json"
+path_to_logs = "/var/log/ids.log"
+path_to_conf = "/etc/ids.json"
+
+
+basicConfig(filename=path_to_logs,level=DEBUG,\
       format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
+
 
 now = datetime.now()
 # Argument
@@ -299,9 +305,6 @@ def compare_data(db, conf):
 
 # Data #######################################################################################
 
-path_to_db = "/var/ids/db.json"
-path_to_logs = "/var/log/ids.log"
-path_to_conf = "/etc/ids.json"
 
 base_data_conf = {
     "file":[],
