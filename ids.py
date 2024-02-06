@@ -12,9 +12,9 @@ from hashlib import md5,sha256,sha512
 from datetime import datetime
 from psutil import net_connections, CONN_LISTEN
 from logging import basicConfig, warning, info, DEBUG
-# from dirhash import dirhash
+import __future__# from dirhash import dirhash
 
-basicConfig(filename='/var/log/ids.log',level=DEBUG,\
+basicConfig(filename=__future__.path_to_logs,level=DEBUG,\
       format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
 
 now = datetime.now()
@@ -48,8 +48,8 @@ def create_file_conf():
     
     Cree le fichier de conf
     """
-    if exists("/etc/ids.json") is False:
-        with open("/etc/ids.json", "w", encoding="utf8") as json_file:
+    if exists(path_to_conf) is False:
+        with open(path_to_conf, "w", encoding="utf8") as json_file:
             conf_json = dumps(base_data_conf)
             json_file.write(conf_json)
             info('Fichier de Conf Crée')
@@ -63,7 +63,7 @@ def create_clone_json():
     """
     if isdir("/var/ids") is False:
         mkdir("/var/ids")
-        with open("/var/ids/db.json", "x", encoding="utf-8") as _:
+        with open(path_to_db, "x", encoding="utf-8") as _:
             ...
 
 
@@ -74,10 +74,10 @@ def create_logs():
     """
 
 
-    if exists("/var/log/ids.log"):
+    if exists(path_to_logs):
         info("Fichier deja crée")
         return
-    with open("/var/log/ids.log", "x", encoding="utf-8") as _:
+    with open(path_to_logs, "x", encoding="utf-8") as _:
         pass
 
 
@@ -101,10 +101,10 @@ def create_right():
 
 
     run(['useradd', '-p', 'ids', 'ids'], check=False)
-    run(['chmod', '-R', 'u+rw', '/etc/ids.json'], check=False)
-    run(['chmod', '-R', 'u+rw', '/var/ids/db.json'], check=False)
-    run(['chmod', '-R', 'u+rw', '/var/log/ids.log'],check=False)
-    run(['chown', '-R', 'ids:ids', '/var/log/ids.log' , '/etc/ids.json', '/var/ids/db.json'],
+    run(['chmod', '-R', 'u+rw', path_to_conf], check=False)
+    run(['chmod', '-R', 'u+rw', path_to_db], check=False)
+    run(['chmod', '-R', 'u+rw', path_to_logs],check=False)
+    run(['chown', '-R', 'ids:ids', path_to_logs , path_to_conf, path_to_db],
          check=False)
 
 
@@ -115,7 +115,7 @@ def is_init() -> bool:
     """
 
 
-    if exists("/etc/ids.json"):
+    if exists(path_to_conf):
         return True
     return False
 
@@ -125,10 +125,22 @@ def recup_json_conf():
     
     Recuperere la Conf Json Pour la Traiter
     """
-    with open("/etc/ids.json", "r", encoding="utf-8") as jsonfile:
+    with open(path_to_conf, "r", encoding="utf-8") as jsonfile:
         conf = load(jsonfile)
-        print("Read Succes")
+        info("Read Json Conf Succes")
         return conf
+
+
+def recup_db():
+    """
+    
+    Recupere les Informations de la DB
+    """
+    with open(path_to_db, "r", encoding="utf-8") as jsonfile:
+        conf = load(jsonfile)
+        info("Read Db Succes")
+        return conf
+
 
 
 def is_file(conf)->bool:
@@ -194,7 +206,6 @@ def hash_sha256(file):
         for chunk in iter(lambda: f.read(4096), b""):
             sha256_hash.update(chunk)
     return sha256_hash.hexdigest()
-
 
 def hash_md5(file):
     """
@@ -276,24 +287,21 @@ def create_db_port():
         }
         port_db.append(ports)
         info("FIN De Du Scan des Ports")
-    
-
-    
 
 
-def write_json_db():
-    """
-    
-    On Va ecrire tous ce qu'il y as dans l'obj db dans le ficheir db.json 
-    """
-    ... 
+def compare_data(db, conf):
+    for file in conf["file"]:
+        print("file")
+        if (db[])
 
-    
-    
+
 
 
 # Data #######################################################################################
 
+path_to_db = "/var/ids/db.json"
+path_to_logs = "/var/log/ids.log"
+path_to_conf = "/etc/ids.json"
 
 base_data_conf = {
     "file":[],
@@ -357,14 +365,21 @@ if __name__ == '__main__':
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
-            string_to_json("/var/ids/db.json", "w", data_db_map)
-            ("Clone des Information reussi")
+            string_to_json(path_to_db, "w", data_db_map)
+            info("Clone des Information reussi")
 
 
     #Verif Quelle arguement est passé
     if arg.check == 1:
+
         if is_init() is False:
-            warning("Utilse le Init Avant")
+            warning("Utilise le Init Avant")
             print("ERREUR: Utililse (-init) La premiere fois")
         else:
-            print("check")
+            if (getsize(path_to_conf) == 0):
+                warning("Utilise la commande -build avant ou ajouté des fichier a verifié dans la conf")
+            else:
+                data_db = recup_db()
+                data_conf = recup_json_conf()
+                compare_data(data_db, data_conf)
+
