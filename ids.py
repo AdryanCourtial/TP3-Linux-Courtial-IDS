@@ -296,9 +296,15 @@ def create_db_port():
 
 
 def compare_data(db, conf):
+    i = 0
     for file in conf["file"]:
         print(file)
-        print(db["infos"][0])
+        for dbi in db["info"]:
+            if (file == dbi["name"]):
+                print(dbi)
+                break
+    
+    
 
 
 
