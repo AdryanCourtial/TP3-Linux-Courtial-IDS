@@ -299,9 +299,9 @@ def compare_data(db, conf):
     i = 0
     for file in conf["file"]:
         print(file)
-        for dbi in db["info"]:
+        for dbi in db["infos"]:
             if (file == dbi["name"]):
-                print(dbi)
+                print(dbi + "\n\n")
                 break
     
     
