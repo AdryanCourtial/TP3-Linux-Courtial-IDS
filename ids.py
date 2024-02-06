@@ -298,7 +298,7 @@ def create_db_port():
 def compare_data(db, conf):
     for file in conf["file"]:
         print(file)
-        print(db["infos"])
+        print(db["infos"][1])
 
 
 
