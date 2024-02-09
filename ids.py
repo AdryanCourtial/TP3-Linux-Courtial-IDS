@@ -294,9 +294,38 @@ def create_db_port():
         port_db.append(ports)
         info("FIN De Du Scan des Ports")
 
+def compare_port(db):
+    """
+    
+    Compare Les Ports qui sont ouvert
+    """
+    connections = net_connections(kind='inet')
+
+# filter to get only ports equal to LISTEN
+    my_ports = [conn.laddr.port for conn in connections if conn.status == CONN_LISTEN]
+
+# Exclude duplicate ports
+    my_ports = list(set(my_ports))
+
+# Order from smallest to largest port
+    my_ports.sort()
+
+# Show the TCP ports that is waiting for connection (LISTENING)
+    for port in my_ports:
+        for port_db in db["port"]:
+            if port_db == port:
+                print("Aucun Changement")
+                break
+            else:
+                continue
+        ...
+        
+            
+
+    
+
 
 def compare_data(db, conf):
-    i = 0
     for file in conf["file"]:
         print(file)
         for dbi in db["infos"]:
@@ -314,10 +343,13 @@ def compare_data(db, conf):
                     dbi["group"] == file_info.st_gid and
                     dbi["size"] == getsize(file)
                 ):
-                    print("Rien N'as Etais Modifié")
+                    print("Rien N'as Etais Modifié") 
+                    #Ajouter au Rapport avec le Nom plus letat
                 else: 
                     print("Modification")
                 break
+    
+    compare_port(db)
     
     
 
