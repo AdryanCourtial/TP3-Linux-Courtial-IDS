@@ -312,8 +312,8 @@ def compare_port(db):
 
 # Show the TCP ports that is waiting for connection (LISTENING)
     for port in my_ports:
-        for port_db in db["port_listen"]["name"]:
-            if port_db == port:
+        for port_db in db["port_listen"]:
+            if port_db["name"] == port:
                 print("Aucun Changement")
                 break
             else:
