@@ -314,7 +314,7 @@ def compare_port(db):
     for port in my_ports:
         for port_db in db["port_listen"]:
             if port_db["name"] == port:
-                print("Aucun Changement")
+                print(f"Aucun Changement sur {port}")
                 break
             else:
                 continue
