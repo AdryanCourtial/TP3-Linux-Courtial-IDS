@@ -315,9 +315,8 @@ def compare_port(db):
         for port_db in db["port_listen"]:
             if port_db["name"] == port:
                 report_info.append({f"Port : {port}" : {"state":"ok"}})
-                print(db["port_listen"].index(port_db))
                 break
-            elif(port_db["name"] == port and db["port_listen"].index(port_db)):
+            elif(port_db["name"] == port and db["port_listen"].index(port_db) == -1):
                 print(db["port_listen"].index(port_db))
                 report_info.append({f"Port : {port}" : {"state":"divergent"}})
             else:
