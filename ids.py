@@ -288,10 +288,7 @@ def create_db_port():
 # Show the TCP ports that is waiting for connection (LISTENING)
     for port in my_ports:
         info(f"My Open TCP port= {port}  is LISTENING  for TCP connection")
-        ports = {
-            "name": port
-        }
-        port_db.append(ports)
+        port_db.append(port)
         info("FIN De Du Scan des Ports")
 
 def compare_port(db):
