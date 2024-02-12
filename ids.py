@@ -314,11 +314,11 @@ def compare_port(db):
     for port in my_ports:
         for port_db in db["port_listen"]:
             if port_db["name"] == port:
-                print(f"Aucun Changement sur {port}")
+                report_info.append({f"Port : {port}" : {"state":"ok"}})
                 break
             else:
                 continue
-        ...
+        report_info.append({f"Port : {port}" : {"state":"divergent"}})
         
             
 
@@ -343,10 +343,10 @@ def compare_data(db, conf):
                     dbi["group"] == file_info.st_gid and
                     dbi["size"] == getsize(file)
                 ):
-                    print("Rien N'as Etais Modifié") 
+                    report_info.append({dbi["name"] : {"state":"ok"}})
                     #Ajouter au Rapport avec le Nom plus letat
                 else: 
-                    print("Modification")
+                    report_info.append({dbi["name"] : {"state":"divergent"}})
                 break
     
     compare_port(db)
@@ -368,6 +368,12 @@ base_data_conf = {
 data_db_map = {
     "date": "",
 }
+
+report = {
+    "report":""
+}
+
+report_info = []
 
 data_db = []
 
@@ -437,4 +443,6 @@ if __name__ == '__main__':
                 data_db = recup_db()
                 data_conf = recup_json_conf()
                 compare_data(data_db, data_conf)
+                report["report"] == report_info
+                print(report)
 
