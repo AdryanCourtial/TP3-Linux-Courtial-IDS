@@ -312,7 +312,7 @@ def compare_port(db):
 
 # Show the TCP ports that is waiting for connection (LISTENING)
     for port in my_ports:
-        if "name" in db["port_listen"]:
+        if db["port_listen"][port] in db["port_listen"]:
             report_info.append({f"port : {port}" : {"state":"ok"}})
         else:
             report_info.append({f"port : {port}" : {"state":"divergent"}})
