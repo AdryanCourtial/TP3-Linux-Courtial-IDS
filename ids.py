@@ -105,7 +105,7 @@ def create_right():
     Cree les Droits pour L'app
     """
 
-
+#A FAIRE EN BASH UNE FOIS TERMINER LE PROJ
     run(['useradd', '-p', 'ids', 'ids'], check=False)
     run(['chmod', '-R', 'u+rw', path_to_conf], check=False)
     run(['chmod', '-R', 'u+rw', path_to_db], check=False)
@@ -312,21 +312,12 @@ def compare_port(db):
 
 # Show the TCP ports that is waiting for connection (LISTENING)
     for port in my_ports:
-        for port_db in db["port_listen"]:
-            if port_db["name"] == port and db["port_listen"].index(port_db) != -1:
-                report_info.append({f"Port : {port}" : {"state":"ok"}})
-                break
-            elif port_db["name"] != port and db["port_listen"].index(port_db) == -1:
-                print(db["port_listen"].index(port_db))
-                report_info.append({f"Port : {port}" : {"state":"divergent"}})
-            else:
-                continue
+        if port in db["port_listen"]:
+            report_info.append({f"port : {port}" : {"state":"ok"}})
+        else:
+            report_info.append({f"port : {port}" : {"state":"divergent"}})
+
             #COMMENT JE MET QUE CES DIVERGENT POV  : JE SUIS PERDU 
-
-        
-            
-
-    
 
 
 def compare_data(db, conf):
@@ -425,7 +416,6 @@ if __name__ == '__main__':
             if if_port(data_conf) is True:
                 create_db_port()
                 info("Info POrts Copié !")
-
             #Ajout a Mon Objet Final de Tout
             data_db_map["infos"] = data_db
             data_db_map["port_listen"] = port_db
