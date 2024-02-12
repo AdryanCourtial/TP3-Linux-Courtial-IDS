@@ -370,7 +370,6 @@ data_db_map = {
 }
 
 report = {
-    "report":[]
 }
 
 report_info = []
@@ -443,6 +442,6 @@ if __name__ == '__main__':
                 data_db = recup_db()
                 data_conf = recup_json_conf()
                 compare_data(data_db, data_conf)
-                report["report"] == report_info
+                report["report"] = report_info
                 print(report)
 
