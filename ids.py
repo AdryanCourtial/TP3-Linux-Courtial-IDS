@@ -316,9 +316,12 @@ def compare_port(db):
             if port_db["name"] == port:
                 report_info.append({f"Port : {port}" : {"state":"ok"}})
                 break
+            elif(port_db["name"] == port and len(db["port_listen"]) == db["port_listen"].index(port_db)):
+                report_info.append({f"Port : {port}" : {"state":"divergent"}})
             else:
                 continue
             #COMMENT JE MET QUE CES DIVERGENT POV  : JE SUIS PERDU 
+
         
             
 
