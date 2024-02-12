@@ -370,7 +370,7 @@ data_db_map = {
 }
 
 report = {
-    "report":""
+    "report":[]
 }
 
 report_info = []
