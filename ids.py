@@ -318,7 +318,7 @@ def compare_port(db):
                 break
             else:
                 continue
-        report_info.append({f"Port : {port}" : {"state":"divergent"}})
+            #COMMENT JE MET QUE CES DIVERGENT POV  : JE SUIS PERDU 
         
             
 
