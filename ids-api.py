@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 app.route('/check', methods=['POST'])
 def make_check():
-    check()
+    return check()
 
 app.route('/reports', methods=['GET'])
 def recup_reports():
