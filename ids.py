@@ -342,6 +342,20 @@ def compare_data(db, conf):
                 break
     
     compare_port(db)
+
+def check():
+    if is_init() is False:
+            warning("Utilise le Init Avant")
+            print("ERREUR: Utililse (-init) La premiere fois")
+    else:
+        if (getsize(path_to_conf) == 0):
+            warning("Utilise la commande -build avant ou ajouté des fichier a verifié dans la conf")
+        else:
+            data_db = recup_db()
+            data_conf = recup_json_conf()
+            compare_data(data_db, data_conf)
+            report["report"] = report_info
+            print(report)
     
     
 
@@ -422,17 +436,4 @@ if __name__ == '__main__':
 
     #Verif Quelle arguement est passé
     if arg.check == 1:
-
-        if is_init() is False:
-            warning("Utilise le Init Avant")
-            print("ERREUR: Utililse (-init) La premiere fois")
-        else:
-            if (getsize(path_to_conf) == 0):
-                warning("Utilise la commande -build avant ou ajouté des fichier a verifié dans la conf")
-            else:
-                data_db = recup_db()
-                data_conf = recup_json_conf()
-                compare_data(data_db, data_conf)
-                report["report"] = report_info
-                print(report)
-
+        check()
