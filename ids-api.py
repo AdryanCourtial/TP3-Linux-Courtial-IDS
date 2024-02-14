@@ -18,4 +18,4 @@ def recup_report_by_id():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='10.1.1.100', port=80, debug=True)
