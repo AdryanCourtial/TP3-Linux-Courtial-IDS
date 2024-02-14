@@ -15,3 +15,7 @@ def recup_reports():
 app.route('/reports/<id>', methods=['GET'])
 def recup_report_by_id():
     ...
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
