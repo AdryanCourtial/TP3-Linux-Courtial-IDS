@@ -376,7 +376,7 @@ def create_report_id():
     highest_number = 0
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
     for i in fichier:
-        i = delete_extenssion(i)
+        fichier[i] = delete_extenssion(i)
     print(fichier)
 
 
