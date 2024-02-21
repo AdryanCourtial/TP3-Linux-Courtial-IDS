@@ -3,8 +3,8 @@
 
 
 """
-from os.path import getctime, getsize, getmtime, exists, isdir
-from os import mkdir, stat
+from os.path import getctime, getsize, getmtime, exists, isdir, isfile
+from os import mkdir, stat, listdir
 from argparse import ArgumentParser
 from json import load, dumps
 from subprocess import run
@@ -345,7 +345,7 @@ def compare_data(db, conf):
     compare_port(db)
 
 
-def add_report(r):
+def add_last_report(r):
     """
     
     Add Au fichier last pour l'API
@@ -368,11 +368,14 @@ def check():
             compare_data(data_db, data_conf)
             report["report"] = report_info
             print(report)
-            add_report(report)
-    
-    
+            add_last_report(report)
+            create_report_id()
 
 
+def create_report_id():
+    highest_number = 0
+    fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
+    print(fichier)
 
 # Data #######################################################################################
 
