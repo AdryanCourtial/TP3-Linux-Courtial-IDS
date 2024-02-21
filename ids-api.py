@@ -11,12 +11,9 @@ def make_check():
 
 @app.route('/reports', methods=['GET'])
 def recup_reports():
-    essaie = {
-        "data" : 10,
-        "pasData" : 20
-    }
-
-    return dumps(essaie)
+    file = open("./data/report.json", "r")
+    return file
+    
 
 
 @app.route('/reports/<id>', methods=['GET'])
