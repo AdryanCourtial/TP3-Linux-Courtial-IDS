@@ -382,7 +382,7 @@ def create_report_id(report_id):
         #Et Faire La creation du prochaine fichier 
     else:
         print("Creation du Premiere fichier")
-        file = open(f"./data/data_id/{1}", "w")
+        file = open(f"./data/data_id/{1}.json", "w")
         file.write(dumps(report_id))
         file.close()
 
