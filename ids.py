@@ -385,7 +385,6 @@ def create_report_id(report_id):
             fichier.remove(i)
         else:
             fichier[fichier.index(i)] = delete_extenssion(i)
-            fichier[fichier.index(i)] = int(fichier[fichier.index(i)])
     fichier = sorted(fichier, reverse=True)
     if len(fichier) == 0:
         print(fichier)
