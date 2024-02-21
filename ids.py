@@ -375,7 +375,7 @@ def check():
 
 def add_to_all_report(report):
     file = open("./data/report.json", "a")
-    file.write(dumps(report))
+    file.write(dumps(f"\n{report}"))
     file.close()
 
 def create_report_id(report_id):
