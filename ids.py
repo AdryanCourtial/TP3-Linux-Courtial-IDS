@@ -383,7 +383,7 @@ def create_report_id(report_id):
     else:
         print("Creation du Premiere fichier")
         file = open(f"./data/data_id/{1}", "w")
-        file.write(report_id)
+        file.write(dumps(report_id))
         file.close()
 
 
