@@ -377,7 +377,12 @@ def create_report_id(report):
     for i in fichier:
         fichier[fichier.index(i)] = delete_extenssion(i)
     fichier = sorted(fichier, reverse=True)
-    print("Last report :" + fichier[1])
+    if len(fichier) > 1:
+        print("Last report :" + fichier[1])
+        #Et Faire La creation du prochaine fichier 
+    else:
+        #Crée le fichier numeros 1
+
 
 
 def delete_extenssion(f):
