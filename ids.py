@@ -381,9 +381,13 @@ def add_to_all_report(report):
 def create_report_id(report_id):
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
     for i in fichier:
-        fichier[fichier.index(i)] = delete_extenssion(i)
-    fichier = sorted(int(fichier), reverse=True)
-    if len(fichier) > 1:
+        if i == "last.json":
+            fichier.remove(i)
+        else:
+            fichier[fichier.index(i)] = delete_extenssion(i)
+            fichier[fichier.index(i)] = int(fichier[fichier.index(i)])
+    fichier = sorted(fichier, reverse=True)
+    if len(fichier) == 0:
         print(fichier)
         print("Last report :" + fichier[1])
         file = open(f"./data/data_id/{int(fichier[1]) + 1}.json", "w")
