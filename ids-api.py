@@ -20,8 +20,9 @@ def recup_reports():
 
 
 @app.route('/reports/<id>', methods=['GET'])
-def recup_report_by_id():
-    return "report_by_id"
+def recup_report_by_id(id):
+    file = open(f"./data/data_id/{id}.json", "r")
+    return file
 
 
 @app.route('/reports/last', methods=['GET'])
