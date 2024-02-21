@@ -17,6 +17,7 @@ import __future__# from dirhash import dirhash
 path_to_db = "/var/ids/db.json"
 path_to_logs = "/var/log/ids.log"
 path_to_conf = "/etc/ids.json"
+path_to_last = "./data/data_id/last.json"
 
 
 basicConfig(filename=path_to_logs,level=DEBUG,\
@@ -349,7 +350,7 @@ def add_report(r):
     
     Add Au fichier last pour l'API
     """
-    file = open("./data/data_id/last.json", "w")
+    file = open(path_to_last, "w")
     file.write(dumps(r))
     file.close()
 

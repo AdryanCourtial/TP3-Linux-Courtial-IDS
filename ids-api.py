@@ -1,6 +1,6 @@
 from flask import Flask
 from json import dumps
-from ids import check, recup_db
+from ids import check, recup_db, path_to_last
 
 
 app = Flask(__name__)
@@ -26,8 +26,8 @@ def recup_report_by_id():
 
 @app.route('/reports/last', methods=['GET'])
 def recup_report_last():
-    file = open("")
-    return
+    file = open(path_to_last, "r")
+    return file
 
 
 if __name__ == '__main__':
