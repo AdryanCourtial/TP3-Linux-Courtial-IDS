@@ -373,11 +373,11 @@ def check():
 
 
 def create_report_id(report):
-    highest_number = 0
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
     for i in fichier:
         fichier[fichier.index(i)] = delete_extenssion(i)
-    print(sorted(fichier, reverse=True))
+    fichier = sorted(fichier, reverse=True)
+    print(fichier[1])
 
 
 def delete_extenssion(f):
