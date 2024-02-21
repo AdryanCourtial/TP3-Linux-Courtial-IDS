@@ -372,7 +372,7 @@ def check():
             create_report_id(report)
 
 
-def create_report_id(report):
+def create_report_id(report_id):
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
     for i in fichier:
         fichier[fichier.index(i)] = delete_extenssion(i)
@@ -382,9 +382,9 @@ def create_report_id(report):
         #Et Faire La creation du prochaine fichier 
     else:
         print("Creation du Premiere fichier")
-        #Crée le fichier numeros 1
-        ...
-
+        file = open(f"./data/data_id/{1}", "x+r")
+        file.write(report_id)
+        file.close()
 
 
 def delete_extenssion(f):
