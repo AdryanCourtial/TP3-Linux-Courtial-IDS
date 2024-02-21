@@ -350,7 +350,7 @@ def add_report(r):
     Add Au fichier last pour l'API
     """
     file = open("./data/data_id/last.json", "w")
-    file.write(r)
+    file.write(dumps(r))
     file.close()
 
 
