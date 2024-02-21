@@ -376,7 +376,12 @@ def check():
 def create_report_id():
     highest_number = 0
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
-    print(Path(fichier).stem)
+    print(delete_extenssion(fichier))
+
+
+def delete_extenssion(f):
+    nouveau_nom = '.'.join(f.split('.')[:-1])
+    print(nouveau_nom)
 
 # Data #######################################################################################
 
