@@ -383,6 +383,7 @@ def create_report_id():
 def delete_extenssion(f):
     nouveau_nom = '.'.join(f.split('.')[:-1])
     print(nouveau_nom)
+    return nouveau_nom
 
 # Data #######################################################################################
 
