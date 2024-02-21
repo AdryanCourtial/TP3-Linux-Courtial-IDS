@@ -383,11 +383,12 @@ def create_report_id(report_id):
     fichier.remove("last.json")
     for i in fichier:
             fichier[fichier.index(i)] = delete_extenssion(i)
+            fichier[fichier.index(i)] = int
     fichier = sorted(fichier, reverse=True)
     if len(fichier) > 0:
         print(fichier)
-        print("Last report :" + fichier[1])
-        file = open(f"./data/data_id/{int(fichier[1]) + 1}.json", "w")
+        print("Last report :" + fichier[0])
+        file = open(f"./data/data_id/{int(fichier[0]) + 1}.json", "w")
         file.write(dumps(report_id))
         file.close()
     else:
