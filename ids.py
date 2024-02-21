@@ -381,6 +381,7 @@ def create_report_id(report):
         print("Last report :" + fichier[1])
         #Et Faire La creation du prochaine fichier 
     else:
+        print("Creation du Premiere fichier")
         #Crée le fichier numeros 1
         ...
 
