@@ -12,7 +12,6 @@ from hashlib import md5,sha256,sha512
 from datetime import datetime
 from psutil import net_connections, CONN_LISTEN
 from logging import basicConfig, warning, info, DEBUG
-from pathlib import Path
 import __future__# from dirhash import dirhash
 
 path_to_db = "/var/ids/db.json"
@@ -376,7 +375,9 @@ def check():
 def create_report_id():
     highest_number = 0
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
-    print(delete_extenssion(fichier))
+    for i in fichier:
+        delete_extenssion(i)
+    print(fichier)
 
 
 def delete_extenssion(f):
