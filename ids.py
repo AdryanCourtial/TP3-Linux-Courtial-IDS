@@ -369,7 +369,7 @@ def check():
             report["report"] = report_info
             print(report)
             add_last_report(report)
-            create_report_id()
+            create_report_id(report)
 
 
 def create_report_id(report):
