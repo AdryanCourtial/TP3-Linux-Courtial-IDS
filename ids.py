@@ -383,7 +383,7 @@ def create_report_id(report_id):
     fichier.remove("last.json")
     for i in fichier:
             fichier[fichier.index(i)] = delete_extenssion(i)
-            fichier[i] = int
+    fichier = list(map(int, fichier))
     fichier = sorted(fichier, reverse=True)
     if len(fichier) > 0:
         print(fichier)
