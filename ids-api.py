@@ -23,6 +23,10 @@ def recup_reports():
 def recup_report_by_id():
     return "report_by_id"
 
+@app.route('/reports/last', methods=['GET'])
+def recup_report_by_id():
+    return "Last report"
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0" , port=80)
