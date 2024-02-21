@@ -380,10 +380,8 @@ def add_to_all_report(report):
 
 def create_report_id(report_id):
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
+    fichier.remove("last.json")
     for i in fichier:
-        if i == "last.json":
-            fichier.remove(i)
-        else:
             fichier[fichier.index(i)] = delete_extenssion(i)
     fichier = sorted(fichier, reverse=True)
     if len(fichier) > 0:
