@@ -387,7 +387,7 @@ def create_report_id(report_id):
     fichier = sorted(fichier, reverse=True)
     if len(fichier) > 0:
         print(fichier)
-        print(f"Last report :" + {fichier[0]})
+        print(f"Last report :{fichier[0]}")
         file = open(f"./data/data_id/{int(fichier[0]) + 1}.json", "w")
         file.write(dumps(report_id))
         file.close()
