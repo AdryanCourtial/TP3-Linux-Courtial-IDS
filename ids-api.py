@@ -1,11 +1,13 @@
 from flask import Flask
 from json import dumps
 from ids import check
+
+
 app = Flask(__name__)
 
 @app.route('/check', methods=['POST'])
 def make_check():
-    return "<Reussi>"
+    check()
 
 @app.route('/reports', methods=['GET'])
 def recup_reports():
