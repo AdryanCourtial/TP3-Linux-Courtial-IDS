@@ -343,6 +343,17 @@ def compare_data(db, conf):
     
     compare_port(db)
 
+
+def add_report(r):
+    """
+    
+    Add Au fichier last pour l'API
+    """
+    file = open("./data/data_id/last.json", "w")
+    file.write(r)
+    file.close()
+
+
 def check():
     if is_init() is False:
             warning("Utilise le Init Avant")
@@ -356,6 +367,7 @@ def check():
             compare_data(data_db, data_conf)
             report["report"] = report_info
             print(report)
+            add_report(report)
     
     
 
