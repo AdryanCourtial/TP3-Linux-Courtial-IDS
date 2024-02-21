@@ -370,7 +370,13 @@ def check():
             print(report)
             add_last_report(report)
             create_report_id(report)
+            add_to_all_report(report)
 
+
+def add_to_all_report(report):
+    file = open("./data/report.json", "a")
+    file.write(dumps(report))
+    file.close()
 
 def create_report_id(report_id):
     fichier = [i for i in listdir("./data/data_id") if isfile(f"./data/data_id/{i}")]
