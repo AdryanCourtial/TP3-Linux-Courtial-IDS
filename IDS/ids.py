@@ -108,11 +108,10 @@ def create_right():
 
 #A FAIRE EN BASH UNE FOIS TERMINER LE PROJ
     run(['useradd', '-p', 'ids', 'ids'], check=False)
-    run(['chmod', '-R', 'u+rw', "./ids.py"], check=False)
     run(['chmod', '-R', 'u+rw', path_to_conf], check=False)
     run(['chmod', '-R', 'u+rw', path_to_db], check=False)
     run(['chmod', '-R', 'u+rw', path_to_logs],check=False)
-    run(['chown', '-R', 'ids:ids', path_to_logs , path_to_conf, path_to_db],
+    run(['chown', '-R', 'ids:ids',"./ids.py", path_to_logs , path_to_conf, path_to_db],
          check=False)
     run(['chown', '-R', 'ids:ids', path_to_logs , path_to_conf, path_to_db],
          check=False)
