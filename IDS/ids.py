@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 """ Lib 
 
 
@@ -111,8 +111,6 @@ def create_right():
     run(['chmod', '-R', 'u+rw', path_to_conf], check=False)
     run(['chmod', '-R', 'u+rw', path_to_db], check=False)
     run(['chmod', '-R', 'u+rw', path_to_logs],check=False)
-    run(['chown', '-R', 'ids:ids',"./ids.py", path_to_logs , path_to_conf, path_to_db],
-         check=False)
     run(['chown', '-R', 'ids:ids', path_to_logs , path_to_conf, path_to_db],
          check=False)
 
