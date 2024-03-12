@@ -8,5 +8,6 @@ RUN useradd ids
 RUN pip install -r requirements.txt
 
 USER ids
-CMD [ "python3", "ids.py", "--init" ]
+
+CMD [ "sudo", "python3", "ids.py", "--init" ]
 
