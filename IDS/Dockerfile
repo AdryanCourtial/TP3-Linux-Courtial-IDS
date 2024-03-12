@@ -1,6 +1,10 @@
-FROM rockylinux
+FROM python3.9-bullseye
 
-RUN dnf upgrade -y && dnf install python3.9 -y && dnf install pip && pip install -r ./requirements.txt
+USER ids
 
-COPY . ~
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /opt
+
+CMD [ "python3", "ids.py", "--init" ]
 
