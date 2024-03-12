@@ -19,11 +19,6 @@ path_to_logs = "/var/log/ids.log"
 path_to_conf = "/etc/ids.json"
 path_to_last = "./data/data_id/last.json"
 
-
-basicConfig(filename=path_to_logs,level=DEBUG,\
-      format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
-
-
 now = datetime.now()
 # Argument
 parser= ArgumentParser()
