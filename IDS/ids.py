@@ -449,6 +449,9 @@ if __name__ == '__main__':
             warning("Le Init a deja etais utilisé")
             print("Le Init a Déja etais Utilisé")
 
+    basicConfig(filename=path_to_logs,level=DEBUG,\
+        format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
+
     #Verif Quelle arguement est passé
     if arg.build == 1:
         if is_init() is False:
