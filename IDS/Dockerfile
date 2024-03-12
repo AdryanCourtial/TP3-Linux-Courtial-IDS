@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN useradd ids && usermod -aG sudo ids
-RUN pip install -r requirements.txt
+RUN apt-get install -y sudo && useradd ids && usermod -aG sudo ids 
+RUN pip install -r requirements.txt 
 
 USER ids
 
