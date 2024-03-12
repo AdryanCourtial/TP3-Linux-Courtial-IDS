@@ -9,5 +9,5 @@ RUN pip install -r requirements.txt
 
 USER ids
 
-ENTRYPOINT [ "sudo", "python3", "ids.py", "--init" ]
+CMD [ "python3", "ids.py", "--init" ]
 
