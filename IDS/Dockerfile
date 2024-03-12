@@ -1,7 +1,8 @@
 FROM python:3.9
 
 
-RUN useradd ids && pip install --no-cache-dir -r requirements.txt ,
+RUN useradd ids 
+RUN pip install --no-cache-dir -r requirements.txt ,
 
 USER ids
 
