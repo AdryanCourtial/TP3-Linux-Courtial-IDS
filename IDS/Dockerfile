@@ -1,8 +1,9 @@
 FROM python:3.9
 
-USER ids
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN useradd ids && pip install --no-cache-dir -r requirements.txt ,
+
+USER ids
 
 COPY . /opt
 
