@@ -1,4 +1,4 @@
-FROM python3.9-bullseye
+FROM python3.9:bullseye
 
 USER ids
 
